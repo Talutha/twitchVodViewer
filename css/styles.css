@@ -1,0 +1,16 @@
+#vodList {
+    height: 100%;
+    display: flex;
+    flex-flow: wrap;
+    justify-content: center;
+}
+
+.vodHolder {
+    margin-bottom: 15px;
+    padding-left: 10px;
+    text-align: center;
+}
+
+#prevNext {
+    clear: both;
+}
