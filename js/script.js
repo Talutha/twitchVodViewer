@@ -65,6 +65,7 @@ function jsonData() {
 function fillList(data) {
     // Clear HTML from vodlist div so that we may start fresh on each press of next and prev.
     vodList.innerHTML = "";
+    if (data.error === "Not Found") appendInner(vodList, data.status + ' - ' + data.message);
     if (data._links.prev !== undefined) {
         prevListLink = data._links.prev + '&callback=?';
     } else {
