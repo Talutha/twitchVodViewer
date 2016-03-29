@@ -7,7 +7,10 @@ var nextList = document.getElementById('nextList');
 var vod = document.querySelectorAll('.vod');
 var nextListLink = '';
 var prevListLink = null;
-var jsonLink = "https://api.twitch.tv/kraken/channels/summit1g/videos?limit=12&broadcasts=true&callback=?";
+var kraken = 'https://api.twitch.tv/kraken/channels/'
+var searchContents = 'summit1g'
+var urlEnd = '/videos?limit=12&broadcasts=true&callback=?'
+var jsonLink = kraken + searchContents + urlEnd
 var vodList = document.getElementById('vodList');
 
 // Add ability to grab JSON from the Twitch API
@@ -26,15 +29,37 @@ function getJSONP(url, success) {
     head.appendChild(script);
 }
 
+function keyPress(event) {
+    
+    if (window.event) {
+        return event.keyCode;
+    }
+    
+}
+
+function searchStreamer(event) {
+    var searchForm = document.getElementById('searchBox');
+    
+    if (keyPress(event) === 13) {
+        searchContents = searchForm.value;
+        jsonLink = kraken + searchContents + urlEnd;
+        jsonData();
+        return false;
+    }
+    
+}
+
 // Shortcut function to append HTML into tags.
 function appendInner(tag, data) {
     tag.innerHTML = tag.innerHTML + data;
 }
 
 // Grab JSON information from Twitch then send it to fillList to populate the VOD list.
-var jsonData = getJSONP(jsonLink, function(data) {
-    fillList(data);
-});
+function jsonData() {
+    getJSONP(jsonLink, function(data) {
+        fillList(data);
+    });
+}
 
 // Process the JSON from Twitch and fill the list with VOD links.
 function fillList(data) {
