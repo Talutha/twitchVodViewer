@@ -118,6 +118,7 @@ function vodClick(event) {
 }
 
 (function checkLivestreamer() {
+    cmd = 'livestreamer';
     exec(cmd, function(error, stdout, stderr) {
         if (error) {
             appendInner(vodList,
