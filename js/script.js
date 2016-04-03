@@ -2,7 +2,6 @@ var exec = require('child_process').exec;
 var moment = require('moment');
 var streamLink = "https://secure.twitch.tv/summit1g/v/57029754"
 var cmd = 'livestreamer ' + streamLink + ' source --player-passthrough hls';
-var testLink = document.getElementById('streamLink');
 var nextList = document.getElementById('nextList');
 var vod = document.querySelectorAll('.vod');
 var nextListLink = '';
@@ -118,3 +117,14 @@ function vodClick(event) {
     });
     event.preventDefault();
 }
+
+(function checkLivestreamer() {
+    cmd = 'livestreamer';
+    exec(cmd, function(error, stdout, stderr) {
+        if (error) {
+            appendInner(vodList,
+                       '<H1>You do not have Livestreamer installed, please install now!</h1>'
+                       )
+        };
+    });
+}());
