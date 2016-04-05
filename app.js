@@ -12,7 +12,7 @@ app.on('ready', function() {
     mainWindow = new BrowserWindow({
         width: 1100, 
         height: 600,
-        resizable: true
+        resizable: true,
     });
     
     mainWindow.loadURL('file://' + __dirname + '/index.html');

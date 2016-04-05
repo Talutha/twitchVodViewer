@@ -63,7 +63,7 @@ function jsonData() {
 // Process the JSON from Twitch and fill the list with VOD links.
 function fillList(data) {
     // Clear HTML from vodlist div so that we may start fresh on each press of next and prev.
-    vodList.innerHTML = "";
+    vodList.innerHTML = '';
     if (data._links.prev !== undefined) {
         prevListLink = data._links.prev + '&callback=?';
     } else {
@@ -122,7 +122,8 @@ function vodClick(event) {
     exec(cmd, function(error, stdout, stderr) {
         if (error) {
             appendInner(vodList,
-                       '<H1>You do not have Livestreamer installed, please install now!</h1>'
+                       '<H1>You do not have Livestreamer installed, please install now!</h1>' + 
+                       '<h3>Error: ' + error + '</h3>'
                        )
         };
     });
