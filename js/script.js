@@ -14,38 +14,38 @@ var vodList = document.getElementById('vodList');
 
 // Add ability to grab JSON from the Twitch API
 function getJSONP(url, success) {
-    
+
     var ud = '_' + +new Date,
         script = document.createElement('script'),
         head = document.getElementsByTagName('head')[0] || document.documentElement;
-    
+
     window[ud] = function(data) {
         head.removeChild(script);
         success && success(data);
     };
-    
+
     script.src = url.replace('callback=?', 'callback=' + ud);
     head.appendChild(script);
 }
 
 function keyPress(event) {
-    
+
     if (window.event) {
         return event.keyCode;
     }
-    
+
 }
 
 function searchStreamer(event) {
     var searchForm = document.getElementById('searchBox');
-    
+
     if (keyPress(event) === 13) {
         searchContents = searchForm.value;
         jsonLink = kraken + searchContents + urlEnd;
         jsonData();
         return false;
     }
-    
+
 }
 
 // Shortcut function to append HTML into tags.
@@ -64,6 +64,7 @@ function jsonData() {
 function fillList(data) {
     // Clear HTML from vodlist div so that we may start fresh on each press of next and prev.
     vodList.innerHTML = '';
+    if (data.error === "Not Found") appendInner(vodList, data.status + ' - ' + data.message);
     if (data._links.prev !== undefined) {
         prevListLink = data._links.prev + '&callback=?';
     } else {
@@ -75,7 +76,7 @@ function fillList(data) {
         var fullTitle = data.videos[x].title;
         var title = shortenTitle(fullTitle);
         appendInner(vodList,
-                    '<div class="vodHolder"><a class="vod" href="' + data.videos[x].url + '" title="' + fullTitle + '"><img src=' + data.videos[x].preview + ' width=250 height=auto><br>' + title + '</a><br>' + date + '</div>') 
+                    '<div class="vodHolder"><a class="vod" href="' + data.videos[x].url + '" title="' + fullTitle + '"><img src=' + data.videos[x].preview + ' width=250 height=auto><br>' + title + '</a><br>' + date + '</div>')
     }
     vod = document.querySelectorAll('.vod');
     for (var i = 0; i < vod.length; i++){
@@ -122,7 +123,7 @@ function vodClick(event) {
     exec(cmd, function(error, stdout, stderr) {
         if (error) {
             appendInner(vodList,
-                       '<H1>You do not have Livestreamer installed, please install now!</h1>' + 
+                       '<H1>You do not have Livestreamer installed, please install now!</h1>' +
                        '<h3>Error: ' + error + '</h3>'
                        )
         };
